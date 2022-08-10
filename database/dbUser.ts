@@ -9,7 +9,7 @@ export const getUserByEmailAndPassword = async (email: string, password: string)
     return null
   }
   await db.disconnect()
-  const isValid = await bcrypt.compare(password, user.password)
+  const isValid = await bcrypt.compare(password, (user as any).password)
   if (!isValid) {
     return null
   }

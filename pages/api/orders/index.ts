@@ -46,7 +46,7 @@ const crearOrden = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       throw new Error('El total no coincide')
     }
 
-    const userId = session.user._id
+    const userId = (session.user as any)!._id
     const newOrder = new Order({ ...req.body, user: userId, isPaid: false })
     newOrder.total = Math.round(newOrder.total * 100) / 100
     await newOrder.save()

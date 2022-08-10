@@ -1,5 +1,4 @@
 import { FC, useReducer, ReactNode, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import { useSession, signOut } from 'next-auth/react'
 import { tesloApi } from '../../api'
 import { IUser } from '../../interfaces'
@@ -28,7 +27,6 @@ type FormData = {
 
 export const AuthProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE)
-  const router = useRouter()
   const { data, status } = useSession()
 
   useEffect(() => {
@@ -85,7 +83,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
       if (axios.isAxiosError(error)) {
         return {
           hasError: true,
-          error: error?.response?.data?.message
+          error: (error?.response?.data as any).message
         }
       }
 
